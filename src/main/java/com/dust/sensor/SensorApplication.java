@@ -17,17 +17,20 @@ public class SensorApplication {
     @Autowired
     public void setDustRepository(DustRepository repo) {
         this.repo = repo;
-        serial = new Serial();
-        serial.setRepo(repo);
+        serial = new Serial(repo);
     }
 
     public static void main(String[] args) {
         SpringApplication.run(SensorApplication.class, args);
-        //SensorApplication app=new SensorApplication();
-        //serial = new Serial();
+        serial.setMilliseconds(9000);
+        try {
+            serial.initialize();
+            serial.run();
+        } catch (IOException e) {
+            System.out.println("Sensor is missing and only data from the database will be visualized !!!");
+        }
+        System.out.println("Visualize chart");
 
-        serial.setMiliseconds(9000);
-        serial.run();
     }
 
 

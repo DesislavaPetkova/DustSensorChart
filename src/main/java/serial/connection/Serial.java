@@ -15,10 +15,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
 
-interface ReportListener{
-    void handleReport(DustReport report);
-}
-public class Serial implements SerialPortEventListener, Runnable,ReportListener{
+
+public class Serial implements SerialPortEventListener, Runnable {
 
     SerialPort serialPort;
     /**
@@ -46,29 +44,21 @@ public class Serial implements SerialPortEventListener, Runnable,ReportListener{
      * Default bits per second for COM port.
      */
     private static final int DATA_RATE = 9600;
+
     private DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy, MM dd, hh:mm");
-
-
-    public void setRepo(DustRepository repo) {
-        this.repo = repo;
-    }
 
     private DustRepository repo;
 
-    public void setMiliseconds(long miliseconds) {
-        this.miliseconds = miliseconds;
-    }
+    private long milliseconds;
 
-    private long miliseconds;
     private final Object lock = new Object();
-    private  DustReport report;
 
-    public Serial() {
-        initialize();
+    public Serial(DustRepository repo) {
+        this.repo = repo;
     }
 
 
-    private void initialize() {
+    public void initialize() throws IOException {
         //System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/tty.usbserial-1420");
 
         CommPortIdentifier portId = null;
@@ -85,14 +75,13 @@ public class Serial implements SerialPortEventListener, Runnable,ReportListener{
             }
         }
         if (portId == null) {
-            System.out.println("Could not find COM port.");
-            return;
+            throw new IOException("Could not find COM port. Sensor is unavailable! ");
         }
 
 
         try {
             // open serial port, and use class name for the appName.
-            System.out.println("opening serial port");
+            System.out.println("Opening serial port");
             serialPort = (SerialPort) portId.open(this.getClass().getName(),
                     TIME_OUT);
             // set port parameters
@@ -108,14 +97,14 @@ public class Serial implements SerialPortEventListener, Runnable,ReportListener{
             serialPort.addEventListener(this);
             serialPort.notifyOnDataAvailable(true);
         } catch (Exception e) {
-            System.err.println(e.toString());
+            throw new IOException("Could cot initialize event listener ");
         }
     }
 
     public void requestSensorData() throws IOException {
         output = serialPort.getOutputStream();
         if (output != null) {
-            System.out.println("Requesting data...");
+            System.out.println("Requesting sensor data...");
             output.write(2);
             output.flush();
             output.close();
@@ -129,6 +118,7 @@ public class Serial implements SerialPortEventListener, Runnable,ReportListener{
      */
     public synchronized void close() {
         if (serialPort != null) {
+            //todo stop thread
             serialPort.removeEventListener();
             serialPort.close();
         }
@@ -143,8 +133,8 @@ public class Serial implements SerialPortEventListener, Runnable,ReportListener{
                 System.out.println(inputLine);
                 if (!inputLine.equals(" ")) {
                     String[] data = inputLine.split(" ");
-                    System.out.println("in");
-                    report=new DustReport(LocalDateTime.now(), Double.parseDouble(data[1]), Double.parseDouble(data[3]));
+                    DustReport report = new DustReport(LocalDateTime.now(), Double.parseDouble(data[1]), Double.parseDouble(data[3]));
+                    System.out.println("Report created.. Calling handleReport()..");
                     handleReport(report);
 
                 }
@@ -163,29 +153,29 @@ public class Serial implements SerialPortEventListener, Runnable,ReportListener{
         while (true) {
             synchronized (lock) {
                 try {
-                    lock.wait(miliseconds);
+                    lock.wait(milliseconds);
                     requestSensorData();
                     //lock.wait(10000);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
             }
-
 
         }
 
     }
 
-    @Override
-    public void handleReport(DustReport report) {
-        if(repo!=null) {
+    private void handleReport(DustReport report) {
+        if (repo != null) {
             repo.save(report);
-            System.out.println("Saved");
-        }else{
-            System.out.println("repo is null");
+            System.out.println("Saved in Mongo database");
+        } else {
+            System.out.println("Mongo database is not available!");
         }
+    }
+
+    public void setMilliseconds(long milliseconds) {
+        this.milliseconds = milliseconds;
     }
 }
