@@ -11,6 +11,6 @@ import java.util.List;
 public interface DustRepository extends MongoRepository<DustReport,String> {
 
     List<DustReport> findByDens(double dens);
-    List<DustReport> findByDate(LocalDateTime from, LocalDateTime to);
+    List<DustReport> findByDateBetween(LocalDateTime from, LocalDateTime to);
 
 }

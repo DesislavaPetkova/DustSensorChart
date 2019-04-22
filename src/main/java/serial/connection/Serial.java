@@ -23,7 +23,7 @@ public class Serial implements SerialPortEventListener, Runnable {
      * The port we're normally going to use.
      */
     private static final String PORT_NAMES[] = {
-            "/dev/tty.usbserial-1420", // Mac OS X
+            "/dev/tty.usbserial-1410", // Mac OS X
             "COM3", // Windows //todo check if it 3
     };
     /**
@@ -52,6 +52,7 @@ public class Serial implements SerialPortEventListener, Runnable {
     private long milliseconds;
 
     private final Object lock = new Object();
+    public boolean isRunning = true;
 
     public Serial(DustRepository repo) {
         this.repo = repo;
@@ -150,9 +151,12 @@ public class Serial implements SerialPortEventListener, Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        System.out.println("Waiting...."+ isRunning);
+        while (isRunning) {
+            System.out.println("Waiting...."+ isRunning);
             synchronized (lock) {
                 try {
+                    System.out.println("Waiting....   hahahaha");
                     lock.wait(milliseconds);
                     requestSensorData();
                     //lock.wait(10000);
@@ -176,6 +180,20 @@ public class Serial implements SerialPortEventListener, Runnable {
     }
 
     public void setMilliseconds(long milliseconds) {
-        this.milliseconds = milliseconds;
+        synchronized (lock) {
+            lock.notify();
+            this.milliseconds = milliseconds;
+        }
+    }
+
+    public void stopRunnable() {
+
+        synchronized (lock) {
+            lock.notify();
+            isRunning = false;
+
+        }
+
+
     }
 }

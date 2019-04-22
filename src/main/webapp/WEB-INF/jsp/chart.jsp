@@ -4,10 +4,31 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <style>
     <%@include file="../css/tools.css" %>
 </style>
-<%--<link rel="stylesheet" href="../css/tools.css" >--%>
+
+<head>
+    <link href="CSS/Master.css" rel="stylesheet" type="text/css">
+    <!-- include the jQuery UI style sheet -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- include jQuery -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- include jQuery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+</head>
+<style>
+    <%@include file="../css/tools.css" %>
+</style>
 <header class="header">
     <div class="container">
         <h1 class="site-title">Dust Sensor Chart</h1>
@@ -72,15 +93,41 @@
             chart.render();
 
         }
+
     </script>
 </head>
 
 <body>
+<form method="post" action="chart">
+    <div class="timeout">
+        Timeout: <input type="text" name="timeout">
+        <input type="submit" value="Submit">
+    </div>
+</form>
+
+<form method="post" action="chart">
+    <div class="container">
+        <div class='input-group date' id='datetimepicker1'>
+            <p>From date: <input type='text' name="from" class="form-control" id="from"/></p>
+            <p>To date: <input type='text' name="to" class="form-control" id="to"/></p>
+            <input type="submit" value="Submit">
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#from').datetimepicker({format: 'YYYY/MM/DD HH:mm'});
+                $('#to').datetimepicker({format: 'YYYY/MM/DD HH:mm'});
+            });
+        </script>
+
+    </div>
+
+</form>
+
+
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 <section class="content">
-    <%--    <div class="full-bleed cool-photo"></div>--%>
     <article class="post">
         <div class="container">
             <h2>This is the super cool section title</h2>
