@@ -1,14 +1,16 @@
 <!-- chart.jsp-->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+         pageEncoding="ISO-8859-1" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<style><%@include file="../css/tools.css"%></style>
+<style>
+    <%@include file="../css/tools.css" %>
+</style>
 <%--<link rel="stylesheet" href="../css/tools.css" >--%>
 <header class="header">
     <div class="container">
-        <h1 class="site-title">Sensor Chart View</h1>
+        <h1 class="site-title">Dust Sensor Chart</h1>
 
         <span class="site-tagline">Because flexbox is super cool!</span>
     </div>
@@ -25,28 +27,30 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <script type="text/javascript">
-        window.onload = function() {
+        window.onload = function () {
 
             var dps = [[]];
             var chart = new CanvasJS.Chart("chartContainer", {
                 theme: "light2", // "light1", "dark1", "dark2"
                 animationEnabled: true,
+                zoomEnabled: true,
                 title: {
-                    text: "Diamond Production - Canada"
+                    text: "Dust sensor chart"
                 },
                 subtitles: [{
-                    text: "2006 - 2016"
+                    text: "2019 - 2020"
                 }],
                 axisX: {
-                    valueFormatString: "####"
+                    title: "dateTime",
+                    xValueType: "line",
+                    intervalType: "hour",
+                    valueFormatString: "D'th' MMMM hh:mm tt"
                 },
                 axisY: {
-                    title: "Volume (in million carats)"
+                    title: "Dirty"
                 },
                 data: [{
                     type: "spline",
-                    xValueFormatString: "####",
-                    yValueFormatString: "#,##0.0 million carats",
                     dataPoints: dps[0]
                 }]
             });
@@ -55,12 +59,12 @@
             var yValue;
 
             <c:forEach items="${dataPointsList}" var="dataPoints" varStatus="loop">
-            <c:forEach items="${dataPoints}" var="dataPoint">
-            xValue = parseInt("${dataPoint.x}");
+            <c:forEach items="${dataPoints}" var="dataPoint" >
+            xValue = "${dataPoint.x}".split(/\D+/);
             yValue = parseFloat("${dataPoint.y}");
             dps[parseInt("${loop.index}")].push({
-                x : xValue,
-                y : yValue
+                x: new Date(xValue[0], xValue[1], xValue[2], xValue[3], xValue[4], xValue[5]),
+                y: yValue
             });
             </c:forEach>
             </c:forEach>
@@ -76,7 +80,7 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 <section class="content">
-    <div class="full-bleed cool-photo"></div>
+    <%--    <div class="full-bleed cool-photo"></div>--%>
     <article class="post">
         <div class="container">
             <h2>This is the super cool section title</h2>
