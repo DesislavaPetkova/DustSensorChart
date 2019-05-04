@@ -5,15 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -28,7 +22,6 @@ public class MainController {
     public DustRepository repo;
     static List<List<Map<Object, Object>>> list;
     static List<Map<Object, Object>> dataPoints1;
-    static List<DustReport> report;
 
     @Autowired
     public void setDustRepository(DustRepository repo) {
@@ -38,27 +31,9 @@ public class MainController {
 
     @RequestMapping(value = {"/chart"}, method = RequestMethod.GET)
     public String index(Model model) {
-        System.out.println("INDEXX VIEW....... !!! enter");
+        System.out.println("List all reports form database ...");
         updateList(repo.findAll());
-       /* Map<Object, Object> map;
-        list = new ArrayList<List<Map<Object, Object>>>();
-        dataPoints1 = new ArrayList<Map<Object, Object>>();
-        report = repo.findAll();
-        for (DustReport r : report) {
->>>>>>> -initial variant chart view
-            map = new TreeMap<>();
-            map.put("x", r.getDate());
-            map.put("y", r.getDens());
-            dataPoints1.add(map);
-        }
-<<<<<<< HEAD
-        list.add(dataPoints1);
-=======
-        list.add(dataPoints1);*/
-
-
         model.addAttribute("dataPointsList", list);
-
         return "chart";
     }
 
@@ -87,11 +62,8 @@ public class MainController {
 
 
     @RequestMapping("/chart")
-    public String filterDate(@RequestParam("from") String /*@DateTimeFormat(pattern = "yyyy-MM-dd") Date*/ fromDate,
-                             @RequestParam("to") /*@DateTimeFormat(pattern = "yyyy-MM-dd")*/  String toDate, Model model) {
-        System.out.println(fromDate);
-/*String d="2019-04-17 10:00";
-String d1="2019-04-17 23:00";*/
+    public String filterDate(@RequestParam("from") String fromDate,
+                             @RequestParam("to") String toDate, Model model) {
         LocalDateTime date1 = LocalDateTime.parse(fromDate, formatter);
         System.out.println(date1);
         LocalDateTime date2 = LocalDateTime.parse(toDate, formatter);
@@ -119,9 +91,7 @@ String d1="2019-04-17 23:00";*/
             map.put("y", r.getDens());
             dataPoints1.add(map);
         }
-        //System.out.println(dataPoints1.size());
         list.add(dataPoints1);
-
     }
 
 
