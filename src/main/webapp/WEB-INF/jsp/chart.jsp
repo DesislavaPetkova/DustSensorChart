@@ -98,34 +98,54 @@
 </head>
 
 <body>
-<form method="post" action="chart">
+<form method="post" action="/timeout" name="timeoutForm" onsubmit="return validateDateTimeout()">
     <div class="timeout">
-        Timeout: <input type="text" name="timeout">
+        <p>Timeout: <input type="text" name="timeout"></p>
         <input type="submit" value="Submit">
     </div>
 </form>
 
-<form method="post" action="chart">
-    <div class="container">
+<form method="post" action="/chart" name="myForm" onsubmit="return validateDateForm()">
+    <%--<div class="container">--%>
         <div class='input-group date' id='datetimepicker1'>
-            <p>From date: <input type='text' name="from" class="form-control" id="from"/></p>
-            <p>To date: <input type='text' name="to" class="form-control" id="to"/></p>
+            <p>From date: <input type='text' name="start" class="form-control" id="start"/></p>
+            <p>To date: <input type='text' name="end" class="form-control" id="end"/></p>
             <input type="submit" value="Submit">
         </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#from').datetimepicker({format: 'YYYY/MM/DD HH:mm'});
-                $('#to').datetimepicker({format: 'YYYY/MM/DD HH:mm'});
-            });
-        </script>
-
-    </div>
+   <%-- </div>--%>
 
 </form>
 
-
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $('#start').datetimepicker({format: 'YYYY/MM/DD HH:mm'});
+        $('#end').datetimepicker({format: 'YYYY/MM/DD HH:mm'});
+    });
+
+    function validateDateForm() {
+        var x = document.forms["myForm"]["start"].value;
+        var y = document.forms["myForm"]["end"].value;
+        if (x == "" && y == "") {
+            window.alert("Please enter valid date");
+            return false;
+        }
+    }
+
+    function validateDateTimeout() {
+
+        var time = document.forms["timeoutForm"]["timeout"].value;
+
+        if (time == "" || time < 0) {
+            window.alert("Please enter valid timeout in seconds");
+            return false;
+        }
+
+    }
+
+</script>
 </body>
 <section class="content">
     <article class="post">

@@ -14,6 +14,7 @@ import java.io.IOException;
 public class SensorApplication extends SpringBootServletInitializer {
 
     public static Serial serial;
+     static boolean isSensorMissing;
     private DustRepository repo;
 
     @Autowired
@@ -27,6 +28,7 @@ public class SensorApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(SensorApplication.class);
     }
+
     public static void main(String[] args) {
         SpringApplication.run(SensorApplication.class, args);
         serial.setMilliseconds(9000);
@@ -34,6 +36,7 @@ public class SensorApplication extends SpringBootServletInitializer {
             serial.initialize();
             serial.run();
         } catch (IOException e) {
+            isSensorMissing = true;
             System.out.println("Sensor is missing and only data from the database will be visualized !!!");
         }
         System.out.println("Visualize chart");
