@@ -10,7 +10,10 @@ import java.util.List;
 @Repository
 public interface DustRepository extends MongoRepository<DustReport,String> {
 
-    List<DustReport> findByDens(double dens);
+    //List<DustReport> findByDens(double dens);
     List<DustReport> findByDateBetween(LocalDateTime from, LocalDateTime to);
+
+    List<DustReport> findHighestDustReportByDens(); //When the air was with highest density
+    //List<DustReport> findDustReportByDens();
 
 }

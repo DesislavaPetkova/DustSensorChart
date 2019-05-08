@@ -5,10 +5,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
-<style>
-    <%@include file="../css/tools.css" %>
-</style>
-
 <head>
     <link href="CSS/Master.css" rel="stylesheet" type="text/css">
     <!-- include the jQuery UI style sheet -->
@@ -98,26 +94,47 @@
 </head>
 
 <body>
-<form method="post" action="/timeout" name="timeoutForm" onsubmit="return validateDateTimeout()">
-    <div class="timeout">
-        <p>Timeout: <input type="text" name="timeout"></p>
-        <input type="submit" value="Submit">
-    </div>
-</form>
-
-<form method="post" action="/chart" name="myForm" onsubmit="return validateDateForm()">
-    <%--<div class="container">--%>
-        <div class='input-group date' id='datetimepicker1'>
-            <p>From date: <input type='text' name="start" class="form-control" id="start"/></p>
-            <p>To date: <input type='text' name="end" class="form-control" id="end"/></p>
-            <input type="submit" value="Submit">
-        </div>
-   <%-- </div>--%>
-
-</form>
-
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<div id="wrap">
+    <div id="sensor">
+        <h2 class="settings">Sensor settings</h2>
+        <div id="first">
+            <form method="post" action="/start" name="sensorStart">
+                <input type="submit" value="Start" class="myStart">
+            </form>
+        </div>
+        <div id="second">
+            <form method="post" action="/stop" name="sensorStop">
+                <input type="submit" value="Stop" class="myStop">
+            </form>
+        </div>
+        <div id="third">
+            <form method="post" action="/timeout" name="timeoutForm" onsubmit="return validateDateTimeout()">
+                <div class="timeout">
+                    Timeout: <input type="text" name="timeout">
+                    <input type="submit" value="Set" class="mySub">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="forth">
+        <h2 class="settings"> Chart filter settings</h2>
+        <form method="post" action="/chart" name="myForm" onsubmit="return validateDateForm()">
+            <div class='input-group date' id='datetimepicker1'>
+                <p>From date: <input type='text' name="start" class="form-control" id="start"/></p>
+                <p>To date: <input type='text' name="end" class="form-control" id="end"/></p>
+                <input type="submit" value="Filter" class="mySub">
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+
 <script type="text/javascript">
 
     $(function () {
@@ -147,7 +164,7 @@
 
 </script>
 </body>
-<section class="content">
+<%--<section class="content">
     <article class="post">
         <div class="container">
             <h2>This is the super cool section title</h2>
@@ -161,7 +178,7 @@
         </div>
     </article>
 
-</section>
+</section>--%>
 <footer class="footer">
     <div class="container">
         <p>Dust sensor chart view </p>

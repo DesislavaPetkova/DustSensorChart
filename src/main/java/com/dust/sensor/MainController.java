@@ -24,6 +24,8 @@ public class MainController {
     private static List<List<Map<Object, Object>>> list;
     private static List<Map<Object, Object>> dataPoints1;
 
+    public static final int DEFAULT_TIMEOUT = 60; // constant timeout to measure every minute
+
     @Autowired
     public void setDustRepository(DustRepository repo) {
         this.repo = repo;
@@ -42,24 +44,29 @@ public class MainController {
     @RequestMapping("/timeout")
     public String updateTimeout(@RequestParam("timeout") String timeout, Model model) {
         System.out.println("timeout:" + timeout);
+        internalStartUpdate(Long.parseLong(timeout) * 1000);
+        model.addAttribute("dataPointsList", list);
+        return "chart";
+    }
+
+    @RequestMapping("/start")
+    public String sensorStart(Model model) {
+        System.out.println("Start sensor");
+        internalStartUpdate(DEFAULT_TIMEOUT);
+        model.addAttribute("dataPointsList", list);
+        return "chart";
+    }
+
+    @RequestMapping("/stop")
+    public String sensorStop(Model model) {
         if (!SensorApplication.isSensorMissing) {
-            if (timeout.equals("0")) {
-                SensorApplication.serial.stopRunnable();
-                System.out.println("Runnable is stopped");
-            } else {
-                System.out.println("Set timeout...");
-                SensorApplication.serial.setMilliseconds(Long.parseLong(timeout) * 1000);
-                if (!SensorApplication.serial.isRunning) {
-                    SensorApplication.serial.isRunning = true;
-                    System.out.println("Starting runnable... ");
-                    SensorApplication.serial.run();
-                }
-            }
+            SensorApplication.serial.stopRunnable();
+            System.out.println("Runnable is stopped");
         } else {
             System.out.println("Sensor is missing could not start or stop anything!!!!");
         }
-
         model.addAttribute("dataPointsList", list);
+
         return "chart";
     }
 
@@ -93,6 +100,23 @@ public class MainController {
             dataPoints1.add(map);
         }
         list.add(dataPoints1);
+    }
+
+    private void internalStartUpdate(long timeout) {
+        if (!SensorApplication.isSensorMissing) {
+            System.out.println("Set timeout...");
+            SensorApplication.serial.setMilliseconds(timeout * 1000);
+            if (!SensorApplication.serial.isRunning) {
+                SensorApplication.serial.isRunning = true;
+                System.out.println("Starting runnable... ");
+                SensorApplication.serial.run();
+            } else {
+                System.out.println("Sensor is already running");
+            }
+        } else {
+            System.out.println("Sensor is missing could not start or stop anything!!!!");
+        }
+
     }
 
 
