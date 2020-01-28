@@ -19,7 +19,7 @@ import java.util.*;
 public class MainController {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm", Locale.ITALY);
-
+    // TODO autowire here (setter not needed) !!
     private DustRepository repo;
     private static List<List<Map<Object, Object>>> list;
     private static List<Map<Object, Object>> dataPoints1;

@@ -15,6 +15,7 @@ public class SensorApplication extends SpringBootServletInitializer {
 
     public static Serial serial;
      static boolean isSensorMissing;
+     //TODO autowire here !
     private DustRepository repo;
 
     @Autowired

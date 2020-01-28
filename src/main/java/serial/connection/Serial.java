@@ -6,6 +6,7 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import model.DustReport;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,6 +48,7 @@ public class Serial implements SerialPortEventListener, Runnable {
 
     private DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy, MM dd, hh:mm");
 
+    //TODO autowire repo here??
     private DustRepository repo;
 
     private long milliseconds;
