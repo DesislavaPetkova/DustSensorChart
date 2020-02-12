@@ -37,7 +37,7 @@ public class MainController {
         System.out.println("List all reports form database ...");
         updateList(repo.findAll());
         model.addAttribute("dataPointsList", list);
-        return "chart";
+        return "/chart";
     }
 
 
@@ -71,10 +71,9 @@ public class MainController {
     }
 
 
-    @RequestMapping("/chart")
+    @RequestMapping(value={"/filter"})
     public String filterDate(@RequestParam("start") String fromDate,
                              @RequestParam("end") String toDate, Model model) {
-
         LocalDateTime date1 = LocalDateTime.parse(fromDate, formatter);
         System.out.println(date1);
         LocalDateTime date2 = LocalDateTime.parse(toDate, formatter);

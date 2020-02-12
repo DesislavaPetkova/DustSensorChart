@@ -122,7 +122,7 @@
 
     <div id="forth">
         <h2 class="settings"> Chart filter settings</h2>
-        <form method="post" action="/chart" name="myForm" onsubmit="return validateDateForm()">
+        <form method="post" action="/filter" name="myForm" onsubmit="return validateDateForm()">
             <div class='input-group date' id='datetimepicker1'>
                 <p>From date: <input type='text' name="start" class="form-control" id="start"/></p>
                 <p>To date: <input type='text' name="end" class="form-control" id="end"/></p>
