@@ -61,7 +61,7 @@
                     title: "dateTime",
                     xValueType: "line",
                     intervalType: "hour",
-                    valueFormatString: "D'th' MMMM hh:mm tt"
+                    valueFormatString: "D'th' MMMM Y hh:mm tt"
                 },
                 axisY: {
                     title: "Dirty"
@@ -80,7 +80,7 @@
             xValue = "${dataPoint.x}".split(/\D+/);
             yValue = parseFloat("${dataPoint.y}");
             dps[parseInt("${loop.index}")].push({
-                x: new Date(xValue[0], xValue[1], xValue[2], xValue[3], xValue[4], xValue[5]),
+                x: new Date(xValue[0], xValue[1]-1, xValue[2], xValue[3], xValue[4], xValue[5]),
                 y: yValue
             });
             </c:forEach>
@@ -111,7 +111,7 @@
             </form>
         </div>
         <div id="third">
-            <form method="post" action="/timeout" name="timeoutForm" onsubmit="return validateDateTimeout()">
+            <form method="post" action="/timeout" name="filterDate" onsubmit="return validateDateTimeout()">
                 <div class="timeout">
                     Timeout: <input type="text" name="timeout">
                     <input type="submit" value="Set" class="mySub">

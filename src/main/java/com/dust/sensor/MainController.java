@@ -20,16 +20,13 @@ public class MainController {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm", Locale.ITALY);
 
-    private DustRepository repo;
     private static List<List<Map<Object, Object>>> list;
     private static List<Map<Object, Object>> dataPoints1;
 
     public static final int DEFAULT_TIMEOUT = 60; // constant timeout to measure every minute
 
     @Autowired
-    public void setDustRepository(DustRepository repo) {
-        this.repo = repo;
-    }
+    private DustRepository repo;
 
 
     @RequestMapping(value = {"/chart"}, method = RequestMethod.GET)
@@ -79,10 +76,24 @@ public class MainController {
         System.out.println(date1);
         LocalDateTime date2 = LocalDateTime.parse(toDate, formatter);
         System.out.println(date2);
-        Query query = new Query();
-        query.addCriteria(Criteria.where("startDate").gte(fromDate).lt(toDate));
-        updateList(repo.findByDateBetween(date1, date2));
+        updateList(repo.findAllByDateBetween(date1, date2));
         model.addAttribute("dataPointsList", list);
+        return "chart";
+    }
+
+
+
+
+    @RequestMapping("/lastValue")
+    public String getLastValue(Model model){
+
+        DustReport latest=repo.findTopByOrderByDateDesc();
+        System.out.println("Latest report: "+latest);
+
+        model.addAttribute("lastDateReport", latest.getDate());
+        model.addAttribute("lastVoltReport", latest.getVolt()); //this is always '0', so you can use only density
+        model.addAttribute("lastDensReport", latest.getDens());
+        model.addAttribute("dataPointsList", list); // this line adds all point to the chart !!
         return "chart";
     }
 
@@ -90,6 +101,9 @@ public class MainController {
     private void updateList(List<DustReport> report) {
 
         System.out.println("Updating chart view list: " + report.size());
+        for (DustReport rep: report) {
+            System.out.println(rep);
+        }
         Map<Object, Object> map;
         list = new ArrayList<>();
         dataPoints1 = new ArrayList<>();
