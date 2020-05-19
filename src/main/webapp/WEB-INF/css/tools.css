@@ -1,5 +1,5 @@
 body {
-    background: #D7F7FE;
+    background: #FFCDB2;
     font-family: "Nunito", sans-serif;
     color: #222;
 }
@@ -15,7 +15,7 @@ body {
 }
 
 .header {
-    background: #FF6067;
+    background: #E5989B;
     color: white;
     padding: 0.625em;
 }
@@ -64,7 +64,7 @@ h3 {
 }
 
 .main-nav {
-    background: #F7EE1A;
+    background: #FFB4A2;
     color: white;
 }
 
@@ -227,11 +227,11 @@ h3 {
 }
 
 .footer {
-    background: #FF6067;
+    background: #E5989B;
     color: white;
     padding: 0.9375em;
     text-align: center;
-    font-size: 0.8125em;
+    font-size: 1.2125em;
 }
 
 .footer a {
@@ -242,11 +242,8 @@ h3 {
 
 /* --------------------*/
 .myStart {
-    background-color: #44c767;
-    -moz-border-radius: 16px;
-    -webkit-border-radius: 16px;
-    border-radius: 16px;
-    border: 1px solid #18ab29;
+    background-color: #6D6875;
+    border: 1px solid black;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
@@ -259,21 +256,10 @@ h3 {
 
 }
 
-.myStart:hover {
-    background-color: #5cbf2a;
-}
-
-.myStart:active {
-    position: relative;
-    top: 1px;
-}
 
 .myStop {
-    background-color: #fc0505;
-    -moz-border-radius: 16px;
-    -webkit-border-radius: 16px;
-    border-radius: 16px;
-    border: 1px solid #b02323;
+    background-color: #6D6875;
+    border: 1px solid black;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
@@ -282,42 +268,21 @@ h3 {
     font-weight: bold;
     padding: 12px 20px;
     text-decoration: none;
-    text-shadow: 0px 4px 3px #574c4d;
-}
-
-.myStop:hover {
-    background-color: #f70a0a;
-}
-
-.myStop:active {
-    position: relative;
-    top: 1px;
+    text-shadow: 0px 4px 3px #2f6627;
 }
 
 .mySub {
-    background-color: #f7df40;
-    -moz-border-radius: 16px;
-    -webkit-border-radius: 16px;
-    border-radius: 16px;
-    border: 1px solid #cff554;
+    background-color: #6D6875;
+    border: 1px solid black;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
     font-family: Arial;
     font-size: 15px;
     font-weight: bold;
-    padding: 12px 22px;
+    padding: 12px 20px;
     text-decoration: none;
-    text-shadow: 0px 1px 0px #2f6627;
-}
-
-.mySub:hover {
-    background-color: #d8eb46;
-}
-
-.mySub:active {
-    position: relative;
-    top: 1px;
+    text-shadow: 0px 4px 3px #2f6627;
 }
 
 #wrap {
@@ -331,7 +296,9 @@ h3 {
     margin-bottom: 5px;
 
 }
-
+td{ 
+	vertical-align: top;
+}
 #second {
     margin-left: 10px;
     margin-bottom: 5px;
@@ -348,4 +315,8 @@ h3 {
 .settings {
     color: #ff4f51;
     /*size: 25px;*/
+}
+
+#asda{
+	margin-left: 200px;
 }

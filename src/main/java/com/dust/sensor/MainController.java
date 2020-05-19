@@ -1,6 +1,7 @@
 package com.dust.sensor;
 
 import model.DustReport;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -18,7 +19,7 @@ import java.util.*;
 @ComponentScan
 public class MainController {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm", Locale.ITALY);
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm", Locale.ENGLISH);
 
     private static List<List<Map<Object, Object>>> list;
     private static List<Map<Object, Object>> dataPoints1;

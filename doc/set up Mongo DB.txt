@@ -12,22 +12,22 @@ Step 3: in the newly opened tap(cmd)  type 'mongo' -> now you are in mongo db
 
 Step 4: type " use sensor " - this creates database in mongo DB 
 
-Step 5: " db.createCollection("dustReport") "  - this command creates table in the database that we creted previously
+Step 5: " db.createCollection("DustReport") "  - this command creates table in the database that we creted previously
 (Optionally  with ' db.getCollectionInfos() ' you will see the created database with table in it)
 
 Now we have to enter manualy some info in the DB, because the sensor is now available !!!!
 
 Step 6: execute each command separately one on each line:
 
-db.dustReport.save({ "_id" : ObjectId("5cb64549cc704702a18ead8d"), "date" : ISODate("2019-05-05T16:12:40.876Z"), "volt" : 0, "dens" : 2, "_class" : "model.DustReport" })
-db.dustReport.save({ "_id" : ObjectId("5cb64c86cc704702e5183e70"), "date" : ISODate("2019-05-15T12:43:34.081Z"), "volt" : 0, "dens" : 3, "_class" : "model.DustReport" })
-db.dustReport.save({ "_id" : ObjectId("5cb64c8fcc704702e5183e71"), "date" : ISODate("2019-05-25T21:43:43.081Z"), "volt" : 0, "dens" : 4, "_class" : "model.DustReport" })
-db.dustReport.save({ "_id" : ObjectId("5cb64c98cc704702e5183e72"), "date" : ISODate("2019-06-01T20:43:43.081Z"), "volt" : 0, "dens" : 4, "_class" : "model.DustReport" })
-db.dustReport.save({ "_id" : ObjectId("5cb64ca1cc704702e5183e73"), "date" : ISODate("2019-06-03T17:43:43.081Z"), "volt" : 0, "dens" : 4, "_class" : "model.DustReport" })
-db.dustReport.save({ "_id" : ObjectId("5cb64caacc704702e5183e74"), "date" : ISODate("2019-07-20T13:43:43.081Z"), "volt" : 0, "dens" : 3, "_class" : "model.DustReport" })
-db.dustReport.save({ "_id" : ObjectId("5cb64c8fcc704702e5183e75"), "date" : ISODate("2019-07-23T21:43:43.081Z"), "volt" : 0, "dens" : 6, "_class" : "model.DustReport" })
-db.dustReport.save({ "_id" : ObjectId("5cb64c8fcc704702e5183e76"), "date" : ISODate("2019-08-24T18:43:43.081Z"), "volt" : 0, "dens" : 2, "_class" : "model.DustReport" })
-db.dustReport.save({ "_id" : ObjectId("5cb64c8fcc704702e5183e78"), "date" : ISODate("2019-08-25T21:43:43.081Z"), "volt" : 0, "dens" : 8, "_class" : "model.DustReport" })
+db.dustReport.save({ "_id" : ObjectId("5cb64549cc704702a18ead8d"), "date" : ISODate("2020-04-05T16:12:40.876Z"), "volt" : 0, "dens" : 2.5, "_class" : "model.DustReport" })
+db.dustReport.save({ "_id" : ObjectId("5cb64c86cc704702e5183e70"), "date" : ISODate("2020-04-15T12:43:34.081Z"), "volt" : 0, "dens" : 3, "_class" : "model.DustReport" })
+db.dustReport.save({ "_id" : ObjectId("5cb64c8fcc704702e5183e71"), "date" : ISODate("2020-04-25T21:43:43.081Z"), "volt" : 0, "dens" : 4, "_class" : "model.DustReport" })
+db.dustReport.save({ "_id" : ObjectId("5cb64c98cc704702e5183e72"), "date" : ISODate("2020-05-01T20:43:43.081Z"), "volt" : 0, "dens" : 4, "_class" : "model.DustReport" })
+db.dustReport.save({ "_id" : ObjectId("5cb64ca1cc704702e5183e73"), "date" : ISODate("2020-05-03T17:43:43.081Z"), "volt" : 0, "dens" : 4, "_class" : "model.DustReport" })
+db.dustReport.save({ "_id" : ObjectId("5cb64caacc704702e5183e74"), "date" : ISODate("2020-05-03T13:44:43.081Z"), "volt" : 0, "dens" : 3, "_class" : "model.DustReport" })
+db.dustReport.save({ "_id" : ObjectId("5cb64c8fcc704702e5183e75"), "date" : ISODate("2020-05-04T21:43:43.081Z"), "volt" : 0, "dens" : 6, "_class" : "model.DustReport" })
+db.dustReport.save({ "_id" : ObjectId("5cb64c8fcc704702e5183e76"), "date" : ISODate("2020-05-04T18:43:43.081Z"), "volt" : 0, "dens" : 2, "_class" : "model.DustReport" })
+db.dustReport.save({ "_id" : ObjectId("5cb64c8fcc704702e5183e78"), "date" : ISODate("2020-05-04T21:48:43.081Z"), "volt" : 0, "dens" : 8, "_class" : "model.DustReport" })
 
 Lets make sure data is stored successfully
 
