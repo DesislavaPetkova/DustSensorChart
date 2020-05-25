@@ -1,6 +1,6 @@
 <!-- chart.jsp-->
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -27,17 +27,15 @@
 </style>
 <header class="header">
     <div class="container">
-        <h1 class="site-title">Dust Sensor Chart</h1>
-
-        <span class="site-tagline">Because flexbox is super cool!</span>
+        <h1 class="site-title">Статистика на данните</h1>
     </div>
 </header>
 <nav class="main-nav">
     <div class="container">
         <ul>
             <li class="mobile-button"><a href="#">Menu</a></li>
-            <li><a href="#">Sensor view</a></li>
-            <li><a href="#">Work</a></li>
+            <!-- <li><a href="#">Sensor view</a></li>
+            <li><a href="#">Work</a></li> -->
         </ul>
     </div>
 </nav>
@@ -51,20 +49,14 @@
                 theme: "light2", // "light1", "dark1", "dark2"
                 animationEnabled: true,
                 zoomEnabled: true,
-                title: {
-                    text: "Dust sensor chart"
-                },
-                subtitles: [{
-                    text: "2019 - 2020"
-                }],
-                axisX: {
-                    title: "dateTime",
+                    axisX: {
+                    title: "Час и Дата",
                     xValueType: "line",
                     intervalType: "hour",
                     valueFormatString: "D'th' MMMM Y hh:mm tt"
                 },
                 axisY: {
-                    title: "Dirty"
+                    title: " "
                 },
                 data: [{
                     type: "spline",
@@ -98,40 +90,64 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 <div id="wrap">
+	<table>
+	<tr>
+	<td  style="background: #E5989B; border: 1px solid black; padding: 30px; text-transform: uppercase;">
+	<center>
+        <font size="4px"><b> Филтриране на дата </font></b>
+		<br><br><br>
+        <form method="post" action="/chart" name="myForm" onsubmit="return validateDateForm()">
+                <p>От дата: <input type='text' name="start" class="form-control" id="start"/></p>
+                <p>До дата: <input type='text' name="end" class="form-control" id="end"/></p>
+                <input type="submit" value="Филтрирай" class="mySub">
+        </form>
+	</center>
+	</td>
+	<td width="20px"></td>
+	<td style="background: #E5989B; border: 1px solid black; padding: 30px; text-transform: uppercase;">
     <div id="sensor">
-        <h2 class="settings">Sensor settings</h2>
-        <div id="first">
+	<center>
+        <font size="2px"><b>Настройки на сензора</b></font>
+		<br><br>
+		<table align="center">
+		<tr>
+			<td>
             <form method="post" action="/start" name="sensorStart">
-                <input type="submit" value="Start" class="myStart">
+                <input type="submit" value="Старт" class="myStart">
             </form>
-        </div>
-        <div id="second">
+			</td>
+			<td width="30px"></td>
+			<td>
             <form method="post" action="/stop" name="sensorStop">
-                <input type="submit" value="Stop" class="myStop">
+                <input type="submit" value="Стоп" class="myStop">
             </form>
-        </div>
+			</td>
+		</tr>
+		</table>
+		<br>
         <div id="third">
             <form method="post" action="/timeout" name="filterDate" onsubmit="return validateDateTimeout()">
                 <div class="timeout">
-                    Timeout: <input type="text" name="timeout">
-                    <input type="submit" value="Set" class="mySub">
+                    <font size="2px"><b>Продължителност на измерване</b></font> <br />
+					<input type="text" name="timeout"><br />
+					<br>
+                    <input type="submit" value="Задаване" class="mySub"><br />
+					<br>
                 </div>
             </form>
+             </form>
+                <form method="post" action="/lastValue" name="getDens">
+                    <font size="2px"><b>Моментна стойност</b></font> <br />
+					<input type="text" name="lastValue" value="${lastDensReport}" readonly><br />
+					<br>
+					<input type="submit" value="Намери" class="mySub"><br />
+             </form>
         </div>
+	</center>
     </div>
-
-    <div id="forth">
-        <h2 class="settings"> Chart filter settings</h2>
-        <form method="post" action="/chart" name="myForm" onsubmit="return validateDateForm()">
-            <div class='input-group date' id='datetimepicker1'>
-                <p>From date: <input type='text' name="start" class="form-control" id="start"/></p>
-                <p>To date: <input type='text' name="end" class="form-control" id="end"/></p>
-                <input type="submit" value="Filter" class="mySub">
-            </div>
-        </form>
-
-    </div>
-
+	</td>
+	</tr>
+	</table>
 </div>
 
 
@@ -181,7 +197,7 @@
 </section>--%>
 <footer class="footer">
     <div class="container">
-        <p>Dust sensor chart view </p>
+        <!-- <p>Dust sensor chart view </p> -->
     </div>
 </footer>
 </html>
