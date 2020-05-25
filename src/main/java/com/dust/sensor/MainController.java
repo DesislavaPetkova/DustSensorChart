@@ -42,7 +42,7 @@ public class MainController {
     @RequestMapping("/timeout")
     public String updateTimeout(@RequestParam("timeout") String timeout, Model model) {
         System.out.println("timeout:" + timeout);
-        internalStartUpdate(Long.parseLong(timeout) * 1000);
+        internalStartUpdate(Long.parseLong(timeout));
         model.addAttribute("dataPointsList", list);
         return "chart";
     }
